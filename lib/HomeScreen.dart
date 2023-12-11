@@ -1,3 +1,4 @@
+import 'package:cinch/Login.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -35,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 120,),
                     const Text(
-                      'janitorial cleaning ',
+                      'Janitorial Cleaning ',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -57,42 +58,47 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 60,),
-                    Container(
-                      width: MediaQuery.of(context).size.width /2.5 ,
-                      height: MediaQuery.of(context).size.height / 18,
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                    InkWell(
+                      child:Container(
+                        width: MediaQuery.of(context).size.width /2.5 ,
+                        height: MediaQuery.of(context).size.height / 18,
+                        decoration: ShapeDecoration(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          shadows: const [
+                            BoxShadow(
+                              color: Color(0x21000000),
+                              blurRadius: 20,
+                              offset: Offset(0, 4),
+                              spreadRadius: 0,
+                            )
+                          ],
                         ),
-                        shadows: const [
-                          BoxShadow(
-                            color: Color(0x21000000),
-                            blurRadius: 20,
-                            offset: Offset(0, 4),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.values.last,
-                        children: const [
-                          Center(
-                            child: Text(
-                              'Get Started',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.values.last,
+                          children: const [
+                            Center(
+                              child: Text(
+                                'Get Started',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w600,
+                                  height: 0,
+                                ),
                               ),
                             ),
-                          ),
-                          Icon(Icons.double_arrow_outlined, color: Color(0xFF73F501),)
-                        ],
+                            Icon(Icons.double_arrow_outlined, color: Color(0xFF73F501),)
+                          ],
+                        ),
                       ),
-                    )
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> Login()));
+                      },
+                      )
                   ],
                 ),
               ),
