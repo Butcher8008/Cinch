@@ -96,7 +96,20 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> Login()));
+                        Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                                transitionDuration: const Duration(milliseconds: 700),
+                                transitionsBuilder: (context,animation, secondryAnimation,child){
+                                  final slideAnimation= Tween(begin: Offset(0,1),end : Offset(0,0))
+                                      .animate(animation);
+                                  return SlideTransition(position: slideAnimation,
+                                    child: child,
+                                  );
+                                },
+                                pageBuilder : (context,animation,secondryAnimation){
+                                  return const Login();
+                                }));
                       },
                       )
                   ],

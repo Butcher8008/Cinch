@@ -1,4 +1,5 @@
 import 'package:cinch/Calculator.dart';
+import 'package:cinch/Prospects.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -118,6 +119,8 @@ class _DashboardState extends State<Dashboard> {
                           Padding(
                             padding: const EdgeInsets.only(right: 18),
                             child: CircularPercentIndicator(
+                              animation: true,
+                              animationDuration: 1000,
                               radius: 50.0,
                               lineWidth: 13.0,
                               percent: 0.75,
@@ -190,9 +193,7 @@ class _DashboardState extends State<Dashboard> {
                                                   child: Icon(Icons.calculate,size: 30,color: Colors.blue,),// Set the image
                                                 ),
                                               ),
-                                              onTap: (){
-                                                Navigator.push(context, MaterialPageRoute(builder: (context)=> Calculator()));
-                                              },
+
 
                                             )
 
@@ -202,8 +203,20 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                 ),
                                 onTap: (){
-
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Calculator()));
+                                  Navigator.push(
+                                      context,
+                                      PageRouteBuilder(
+                                          transitionDuration: const Duration(milliseconds: 700),
+                                          transitionsBuilder: (context,animation, secondryAnimation,child){
+                                            final slideAnimation= Tween(begin: Offset(1,0),end : Offset(0,0))
+                                              .animate(animation);
+                                            return SlideTransition(position: slideAnimation,
+                                              child: child,
+                                            );
+                                          },
+                                          pageBuilder : (context,animation,secondryAnimation){
+                                            return const Calculator();
+                                          }));
                                 },
                               ),
                               SizedBox(width: 10,),
@@ -255,52 +268,72 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                               ),
                               SizedBox(width: 10,),
-                              Container(
-                                height: 100,
-                                width: 100,
-                                /*color: Colors.blue,*/
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                      color: Colors.grey.withOpacity(0.2), // Border color
-                                      width: 2, // Border width
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.white,
-                                        offset: Offset(0, 3),
+                              InkWell(
+                                child:
+                                Container(
+                                  height: 100,
+                                  width: 100,
+                                  /*color: Colors.blue,*/
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(
+                                        color: Colors.grey.withOpacity(0.2), // Border color
+                                        width: 2, // Border width
                                       ),
-                                    ]
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Prospects",style: TextStyle(color: Colors.grey,fontSize: 14),),
-                                      SizedBox(height: 10,),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey,
-                                              offset: Offset(0, 2), // Adjust the offset as needed
-                                              blurRadius: 3, // Adjust the blur radius as needed
-                                            ),
-                                          ],
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.white,
+                                          offset: Offset(0, 3),
                                         ),
-                                        child: CircleAvatar(
-                                          radius: 20, // Adjust the radius as needed
-                                          backgroundColor: Colors.white, // Set the background color
-                                          child: Icon(Icons.filter_alt,size: 30,color: Colors.blue,),// Set the image
+                                      ]
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Prospects",style: TextStyle(color: Colors.grey,fontSize: 14),),
+                                        SizedBox(height: 10,),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey,
+                                                offset: Offset(0, 2), // Adjust the offset as needed
+                                                blurRadius: 3, // Adjust the blur radius as needed
+                                              ),
+                                            ],
+                                          ),
+                                          child: CircleAvatar(
+                                            radius: 20, // Adjust the radius as needed
+                                            backgroundColor: Colors.white, // Set the background color
+                                            child: Icon(Icons.filter_alt,size: 30,color: Colors.blue,),// Set the image
+                                          ),
                                         ),
-                                      ),
 
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
+                                onTap: (){
+                                  Navigator.push(
+                                      context,
+                                      PageRouteBuilder(
+                                          transitionDuration: const Duration(milliseconds: 700),
+                                          transitionsBuilder: (context,animation, secondryAnimation,child){
+                                            final slideAnimation= Tween(begin: Offset(1,0),end : Offset(0,0))
+                                                .animate(animation);
+                                            return SlideTransition(position: slideAnimation,
+                                              child: child,
+                                            );
+                                          },
+                                          pageBuilder : (context,animation,secondryAnimation){
+                                            return const Prospects();
+                                          }));
+                                },
+
                               ),
                               SizedBox(width: 10,),
                               Container(

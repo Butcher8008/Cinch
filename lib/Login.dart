@@ -111,7 +111,18 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashboard()));
+                  Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                      transitionDuration: const Duration(milliseconds: 500),
+                        transitionsBuilder: (context,animation, secondryAnimation,child){
+                        return FadeTransition(opacity: animation,
+                          child: child,
+                        );
+                        },
+                        pageBuilder : (context,animation,secondryAnimation){
+                        return const Dashboard();
+                  }));
                 },
               )
             ],
