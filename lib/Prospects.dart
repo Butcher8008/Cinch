@@ -23,11 +23,11 @@ class _ProspectsState extends State<Prospects> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
+                    const Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
+                          padding: EdgeInsets.only(right: 10.0),
                           child: CircleAvatar(
                             radius: 25,
                             backgroundColor: Colors.black,
@@ -45,7 +45,7 @@ class _ProspectsState extends State<Prospects> {
                     ),
 
                     Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
@@ -55,7 +55,7 @@ class _ProspectsState extends State<Prospects> {
                           ),
                         ],
                       ),
-                      child: CircleAvatar(
+                      child: const CircleAvatar(
                         radius: 25, // Adjust the radius as needed
                         backgroundColor: Colors.white, // Set the background color
                         child: Icon(Icons.notifications,size: 30,color: Colors.blue,),// Set the image
@@ -65,8 +65,8 @@ class _ProspectsState extends State<Prospects> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 12,left: 30,top: 30),
+              const Padding(
+                padding: EdgeInsets.only(right: 12,left: 30,top: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -74,7 +74,7 @@ class _ProspectsState extends State<Prospects> {
                   ],
                 ),
               ),
-              SizedBox(height: 40,),
+              const SizedBox(height: 40,),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Container(
@@ -94,32 +94,32 @@ class _ProspectsState extends State<Prospects> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Company Name ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             Padding(
-                              padding: const EdgeInsets.only(right: 8),
+                              padding: EdgeInsets.only(right: 8),
                               child: Text("sadfsadfsa",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             ),
                           ],
                         ),
-                        SizedBox(height: 5,),
-                        Row(
+                        const SizedBox(height: 5,),
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Contact Name ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             Padding(
-                              padding: const EdgeInsets.only(right:75),
+                              padding: EdgeInsets.only(right:75),
                               child: Text("sffa",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             ),
                           ],
                         ),
-                        SizedBox(height: 15,),
+                        const SizedBox(height: 15,),
                         Row(
                           mainAxisAlignment:MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
+                            const Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -151,8 +151,8 @@ class _ProspectsState extends State<Prospects> {
                                     borderRadius: BorderRadius.circular(18),
                                     color: Colors.blue.withOpacity(0.1)
                                 ),
-                                child: Center(child:Icon(
-                                  FontAwesomeIcons.search,color: Colors.blue,
+                                child: const Center(child:Icon(
+                                  FontAwesomeIcons.magnifyingGlass,color: Colors.blue,
                                 )
                                 ),
                               ),
@@ -163,7 +163,7 @@ class _ProspectsState extends State<Prospects> {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Container(
@@ -183,32 +183,32 @@ class _ProspectsState extends State<Prospects> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Company Name ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             Padding(
-                              padding: const EdgeInsets.only(right: 8),
+                              padding: EdgeInsets.only(right: 8),
                               child: Text("sadfsadfsa",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             ),
                           ],
                         ),
-                        SizedBox(height: 5,),
-                        Row(
+                        const SizedBox(height: 5,),
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Contact Name ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             Padding(
-                              padding: const EdgeInsets.only(right:75),
+                              padding: EdgeInsets.only(right:75),
                               child: Text("sffa",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             ),
                           ],
                         ),
-                        SizedBox(height: 15,),
+                        const SizedBox(height: 15,),
                         Row(
                           mainAxisAlignment:MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
+                            const Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -240,7 +240,7 @@ class _ProspectsState extends State<Prospects> {
                                     borderRadius: BorderRadius.circular(18),
                                     color: Colors.blue.withOpacity(0.1)
                                 ),
-                                child: Center(child:Text(
+                                child: const Center(child:Text(
                                   "view only",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 15),
                                 )
                                 ),
@@ -252,7 +252,7 @@ class _ProspectsState extends State<Prospects> {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Container(
@@ -272,32 +272,32 @@ class _ProspectsState extends State<Prospects> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Company Name ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             Padding(
-                              padding: const EdgeInsets.only(right: 8),
+                              padding: EdgeInsets.only(right: 8),
                               child: Text("sadfsadfsa",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             ),
                           ],
                         ),
-                        SizedBox(height: 5,),
-                        Row(
+                        const SizedBox(height: 5,),
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Contact Name ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             Padding(
-                              padding: const EdgeInsets.only(right:75),
+                              padding: EdgeInsets.only(right:75),
                               child: Text("sffa",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             ),
                           ],
                         ),
-                        SizedBox(height: 15,),
+                        const SizedBox(height: 15,),
                         Row(
                           mainAxisAlignment:MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
+                            const Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -329,7 +329,7 @@ class _ProspectsState extends State<Prospects> {
                                     borderRadius: BorderRadius.circular(18),
                                     color: Colors.blue.withOpacity(0.1)
                                 ),
-                                child: Center(child:Text(
+                                child: const Center(child:Text(
                                   "view only",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 15),
                                 )
                                 ),
@@ -341,7 +341,7 @@ class _ProspectsState extends State<Prospects> {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Container(
@@ -361,32 +361,32 @@ class _ProspectsState extends State<Prospects> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Company Name ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             Padding(
-                              padding: const EdgeInsets.only(right: 8),
+                              padding: EdgeInsets.only(right: 8),
                               child: Text("sadfsadfsa",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             ),
                           ],
                         ),
-                        SizedBox(height: 5,),
-                        Row(
+                        const SizedBox(height: 5,),
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Contact Name ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             Padding(
-                              padding: const EdgeInsets.only(right:75),
+                              padding: EdgeInsets.only(right:75),
                               child: Text("sffa",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             ),
                           ],
                         ),
-                        SizedBox(height: 15,),
+                        const SizedBox(height: 15,),
                         Row(
                           mainAxisAlignment:MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
+                            const Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -418,7 +418,7 @@ class _ProspectsState extends State<Prospects> {
                                     borderRadius: BorderRadius.circular(18),
                                     color: Colors.blue.withOpacity(0.1)
                                 ),
-                                child: Center(child:Text(
+                                child: const Center(child:Text(
                                   "view only",style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
                                 )
                                 ),
@@ -430,7 +430,7 @@ class _ProspectsState extends State<Prospects> {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Container(
@@ -450,32 +450,32 @@ class _ProspectsState extends State<Prospects> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Company Name ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             Padding(
-                              padding: const EdgeInsets.only(right: 8),
+                              padding: EdgeInsets.only(right: 8),
                               child: Text("sadfsadfsa",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             ),
                           ],
                         ),
-                        SizedBox(height: 5,),
-                        Row(
+                        const SizedBox(height: 5,),
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Contact Name ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             Padding(
-                              padding: const EdgeInsets.only(right:75),
+                              padding: EdgeInsets.only(right:75),
                               child: Text("sffa",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
                             ),
                           ],
                         ),
-                        SizedBox(height: 15,),
+                        const SizedBox(height: 15,),
                         Row(
                           mainAxisAlignment:MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
+                            const Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -516,7 +516,7 @@ class _ProspectsState extends State<Prospects> {
                                     borderRadius: BorderRadius.circular(18),
                                     color: Colors.blue.withOpacity(0.1),
                                   ),
-                                  child: Center(
+                                  child: const Center(
                                     child: Text(
                                       "view only",
                                       style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 15),
@@ -532,7 +532,7 @@ class _ProspectsState extends State<Prospects> {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
 
 
 
@@ -574,13 +574,13 @@ class CustomDialog extends StatelessWidget {
                     CircleAvatar(
                       radius: 45,
                       backgroundColor: Colors.blue.withOpacity(0.2),
-                      child: Icon(Icons.person,size: 70,color: Colors.blue,),
+                      child: const Icon(Icons.person,size: 70,color: Colors.blue,),
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Full Name:",style: TextStyle(fontSize: 18),),
+                        const Text("Full Name:",style: TextStyle(fontSize: 18),),
                         Container(
                           width: 200,
                           height: 30,
@@ -592,7 +592,7 @@ class CustomDialog extends StatelessWidget {
                               // Set the width of the outline
                             ),
                           ),
-                          child: Text(" sfsdaffas",style: TextStyle(fontSize: 18,color: Colors.grey),),
+                          child: const Text(" sfsdaffas",style: TextStyle(fontSize: 18,color: Colors.grey),),
                           ),
 
                       ],
@@ -600,7 +600,7 @@ class CustomDialog extends StatelessWidget {
 
                   ],
                 ),
-                SizedBox(height: 14,),
+                const SizedBox(height: 14,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -608,7 +608,7 @@ class CustomDialog extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Email:",style: TextStyle(fontSize: 16),),
+                        const Text("Email:",style: TextStyle(fontSize: 16),),
                         Container(
                           width: 140,
                           height: 30,
@@ -620,7 +620,7 @@ class CustomDialog extends StatelessWidget {
                               // Set the width of the outline
                             ),
                           ),
-                          child: Text(" sfsdaffas",style: TextStyle(fontSize: 18,color: Colors.grey),),
+                          child: const Text(" sfsdaffas",style: TextStyle(fontSize: 18,color: Colors.grey),),
                         ),
                       ],
                     ),
@@ -628,7 +628,7 @@ class CustomDialog extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Phone:",style: TextStyle(fontSize: 16),),
+                        const Text("Phone:",style: TextStyle(fontSize: 16),),
                         Container(
                           width: 140,
                           height: 30,
@@ -640,7 +640,7 @@ class CustomDialog extends StatelessWidget {
                               // Set the width of the outline
                             ),
                           ),
-                          child: Text(" sfsdaffas",style: TextStyle(fontSize: 16,color: Colors.grey),),
+                          child: const Text(" sfsdaffas",style: TextStyle(fontSize: 16,color: Colors.grey),),
                         ),
 
                       ],
@@ -648,7 +648,7 @@ class CustomDialog extends StatelessWidget {
 
                   ],
                 ),
-                SizedBox(height: 14,),
+                const SizedBox(height: 14,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -656,7 +656,7 @@ class CustomDialog extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Company Name:",style: TextStyle(fontSize: 16),),
+                        const Text("Company Name:",style: TextStyle(fontSize: 16),),
                         Container(
                           width: 140,
                           height: 30,
@@ -668,7 +668,7 @@ class CustomDialog extends StatelessWidget {
                               // Set the width of the outline
                             ),
                           ),
-                          child: Text(" sfsdaffas",style: TextStyle(fontSize: 18,color: Colors.grey),),
+                          child: const Text(" sfsdaffas",style: TextStyle(fontSize: 18,color: Colors.grey),),
                         ),
                       ],
                     ),
@@ -676,7 +676,7 @@ class CustomDialog extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Days of the week:",style: TextStyle(fontSize: 16),),
+                        const Text("Days of the week:",style: TextStyle(fontSize: 16),),
                         Container(
                           width: 140,
                           height: 30,
@@ -688,7 +688,7 @@ class CustomDialog extends StatelessWidget {
                               // Set the width of the outline
                             ),
                           ),
-                          child: Text(" sfsdaffas",style: TextStyle(fontSize: 16,color: Colors.grey),),
+                          child: const Text(" sfsdaffas",style: TextStyle(fontSize: 16,color: Colors.grey),),
                         ),
 
                       ],
@@ -696,14 +696,14 @@ class CustomDialog extends StatelessWidget {
 
                   ],
                 ),
-                SizedBox(height: 14,),
+                const SizedBox(height: 14,),
                 Padding(
                   padding: const EdgeInsets.only(left: 17),
                   child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Enter budgeted cleaning time",style: TextStyle(fontSize: 16),),
+                          const Text("Enter budgeted cleaning time",style: TextStyle(fontSize: 16),),
                           Container(
                             width: 300,
                             height: 30,
@@ -715,19 +715,19 @@ class CustomDialog extends StatelessWidget {
                                 // Set the width of the outline
                               ),
                             ),
-                            child: Text(" sfsdaffas",style: TextStyle(fontSize: 18,color: Colors.grey),),
+                            child: const Text(" sfsdaffas",style: TextStyle(fontSize: 18,color: Colors.grey),),
                           ),
                         ],
                       ),
                 ),
-                SizedBox(height: 14,),
+                const SizedBox(height: 14,),
                 Padding(
                   padding: const EdgeInsets.only(left: 17),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Additional notes:",style: TextStyle(fontSize: 16),),
+                      const Text("Additional notes:",style: TextStyle(fontSize: 16),),
                       Container(
                         width: 300,
                         height: 100,
@@ -739,12 +739,12 @@ class CustomDialog extends StatelessWidget {
                             // Set the width of the outline
                           ),
                         ),
-                        child: Text(" sfsdaffas",style: TextStyle(fontSize: 18,color: Colors.grey),),
+                        child: const Text(" sfsdaffas",style: TextStyle(fontSize: 18,color: Colors.grey),),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
 
 
@@ -756,7 +756,7 @@ class CustomDialog extends StatelessWidget {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.blue),
                     ),
-                    child: Text('Close',style: TextStyle(color: Colors.white),),
+                    child: const Text('Close',style: TextStyle(color: Colors.white),),
                   ),
                 ),
               ],
