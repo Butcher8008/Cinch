@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cinch/Api.dart';
 import 'package:cinch/Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -19,8 +20,9 @@ class _LoginState extends State<Login> {
   bool _obscurePassword = true;
   bool _rememberMe = false;
 
-  void login(String email, password)async{
+  /*void login(String email, password)async{
     try{
+      if (_formKey.currentState!.validate()) {
     Response response = await post(Uri.parse('http://127.0.0.1:8000/api/login'),
     body:{
       'email':email,
@@ -39,7 +41,7 @@ class _LoginState extends State<Login> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-      if (_formKey.currentState!.validate()) {
+
         Navigator.push(
           context,
           PageRouteBuilder(
@@ -90,10 +92,41 @@ class _LoginState extends State<Login> {
         fontSize: 16.0,
       );
     }
-  }
+  }*/
 
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {}
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      print('here');
+      final result = await loginUser(_emailController.text.toString(), _passwordController.text.toString());
+
+      if(result) {
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 500),
+            transitionsBuilder: (
+                context,
+                animation,
+                secondryAnimation,
+                child,
+                ) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+            pageBuilder: (
+                context,
+                animation,
+                secondryAnimation,
+                ) {
+              return const Dashboard();
+            },
+          ),
+        );
+
+      }
+    }
   }
 
   String? _validateEmail(value) {
@@ -245,7 +278,6 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 onTap: () {
-                  login(_emailController.text.toString(), _passwordController.text.toString());
                   _submitForm();
 /*
                   if (_formKey.currentState!.validate()) {
