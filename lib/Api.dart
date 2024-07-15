@@ -19,7 +19,7 @@ loginUser(String email, String password) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
     await prefs.setString('user', jsonEncode(user));
-    Toasts.sucess('Login Sucessfully');
+    Toasts.sucess('Logged In Successfully');
     return true;
 
   } else {
@@ -31,12 +31,22 @@ loginUser(String email, String password) async {
 
     }
     else {
-      Toasts.error('Something went wrong');
+      Toasts.error('Something went wrong!');
       return false;
     }
 
   }
 
+}
 
+getUser() async{
+  final prefs = await SharedPreferences.getInstance();
+  var userString = await prefs.getString('user');
+  if (userString != null) {
+    var user = jsonDecode(userString);
+    return user;
+
+  }
+  return null;
 }
 

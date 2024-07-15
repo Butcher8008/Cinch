@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:cinch/Dashboard.dart';
 import 'package:cinch/HomeScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -11,12 +14,32 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin{
+
+
+  checkToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    Timer(Duration(seconds: 6),(){
+      if(token != null) {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
+      }
+
+      else {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
+    });
+
+    //return token;
+  }
+
+
   bool isFirstImageVisible = false;
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
+    checkToken();
 
     _controller = AnimationController(
       vsync: this,

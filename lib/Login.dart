@@ -96,7 +96,7 @@ class _LoginState extends State<Login> {
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      print('here');
+      //print('here');
       final result = await loginUser(_emailController.text.toString(), _passwordController.text.toString());
 
       if(result) {

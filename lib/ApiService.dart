@@ -4,9 +4,9 @@ import 'package:http/http.dart'as http;
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 class APIService{
- /* static const baseURL = 'https://jdbe.hassyml.online';
-  static const webURL = 'https://jd.hassyml.online';*/
-  final apiUrl='https://reqres.in/api';
+ /* static const baseURL = 'http://127.0.0.1:8000';
+  static const webURL = 'http://127.0.0.1:8000';*/
+  final apiUrl='https://cinch.eatonblueprintinvestments.com/api';
 
 
   final _header = {

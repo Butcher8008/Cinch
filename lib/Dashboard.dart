@@ -6,11 +6,13 @@ import 'package:cinch/Complete.dart';
 import 'package:cinch/Inspection.dart';
 import 'package:cinch/List.dart';
 import 'package:cinch/Profile.dart';
-import 'package:cinch/Prospects.dart';
+import 'package:cinch/Customers.dart';
 import 'package:cinch/ScopeofWork.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'Api.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -20,7 +22,25 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  bool pageLoaded = false;
+  dynamic user;
+  initData() async {
+    var u = await getUser();
+    print(u);
+    setState(() {
+
+      user = u;
+      pageLoaded = true;
+    });
+  }
+
   @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: (SingleChildScrollView(
@@ -42,7 +62,7 @@ class _DashboardState extends State<Dashboard> {
                               padding: EdgeInsets.only(right: 10.0),
                               child: CircleAvatar(
                                 radius: 25,
-                                  backgroundImage: AssetImage('asstes/image/img.png'),
+                                  backgroundImage: pageLoaded && user['cinch_avatar'] != null ? NetworkImage(user['cinch_avatar']) as ImageProvider :  AssetImage('asstes/image/blank.png'),
                               ),
                             ),
                             onTap: () {
@@ -77,7 +97,7 @@ class _DashboardState extends State<Dashboard> {
                                 style: TextStyle(color: Colors.grey),
                               ),
                               Text(
-                                "Dan Smith",
+                                pageLoaded ? user['display_name'] : '...',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -111,7 +131,7 @@ class _DashboardState extends State<Dashboard> {
                 const SizedBox(
                   height: 10,
                 ),
-                Padding(
+                /*Padding(
                   padding: const EdgeInsets.only(top: 10, left: 10),
                   child: Container(
                     height: 150,
@@ -197,11 +217,11 @@ class _DashboardState extends State<Dashboard> {
                       ],
                     ),
                   ),
-                ),
+                ),*/
                 const Padding(
                   padding: EdgeInsets.only(left: 12, top: 20),
                   child: Text(
-                    "What's you need?",
+                    "What you need?",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -218,11 +238,11 @@ class _DashboardState extends State<Dashboard> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            InkWell(
+                            /*InkWell(
                               child: Container(
                                 height: 100,
                                 width: 100,
-                                /*color: Colors.blue,*/
+                                *//*color: Colors.blue,*//*
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
@@ -300,13 +320,13 @@ class _DashboardState extends State<Dashboard> {
                                           return const Calculator();
                                         }));
                               },
-                            ),
+                            ),*/
                             const SizedBox(
                               width: 10,
                             ),
                             Container(
                               height: 100,
-                              width: 100,
+                              width: 150,
                               /*color: Colors.blue,*/
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
@@ -329,7 +349,7 @@ class _DashboardState extends State<Dashboard> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       const Text(
-                                        "Inspection",
+                                        "Inspections",
                                         style: TextStyle(
                                             color: Colors.grey,
                                             fontFamily: "poppins",
@@ -392,7 +412,7 @@ class _DashboardState extends State<Dashboard> {
                             InkWell(
                               child: Container(
                                 height: 100,
-                                width: 100,
+                                width: 150,
                                 /*color: Colors.blue,*/
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
@@ -414,7 +434,7 @@ class _DashboardState extends State<Dashboard> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       const Text(
-                                        "Prospects",
+                                        "Customers",
                                         style: TextStyle(
                                             color: Colors.grey,
                                             fontFamily: "poppins",
@@ -467,7 +487,7 @@ class _DashboardState extends State<Dashboard> {
                                         },
                                         pageBuilder: (context, animation,
                                             secondryAnimation) {
-                                          return const Prospects();
+                                          return const Customers();
                                         }));
                               },
                             ),
@@ -478,7 +498,7 @@ class _DashboardState extends State<Dashboard> {
                               child:
                               Container(
                                 height: 100,
-                                width: 100,
+                                width: 150,
                                 /*color: Colors.blue,*/
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
@@ -500,7 +520,7 @@ class _DashboardState extends State<Dashboard> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       const Text(
-                                        "Scope of ",
+                                        "Scope of Work",
                                         style: TextStyle(
                                             color: Colors.grey,
                                             fontFamily: "poppins",
@@ -600,13 +620,13 @@ class _DashboardState extends State<Dashboard> {
     ),
     indicatorSize: TabBarIndicatorSize.tab,
 indicatorPadding: EdgeInsets.all(5),
-    labelStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),
+    labelStyle: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),
 
     labelColor: Colors.white,
     unselectedLabelColor: Colors.black,
     tabs: const [
     Tab(text: "All tasks",),
-    Tab(text: "Today task"),
+    /*Tab(text: "Today task"),*/
     Tab(text: "In progress"),
     Tab(text: "Completed"),
     ],
