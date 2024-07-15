@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                  'asstes/image/smiling-young-handsome-cleaning-guy-wearing-t-shirt-cap-holding-bucket-cleaning-tools-showing-thumb-up-isolated-white-wall 1.png',
+                  'asstes/image/SplashscreenBackgroundImageCopy.png',
                 ),
                 fit: BoxFit.cover,
               ),

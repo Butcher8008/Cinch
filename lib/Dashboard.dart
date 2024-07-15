@@ -1,16 +1,13 @@
-import 'dart:async';
+import 'dart:convert';
 
-
-import 'package:cinch/Calculator.dart';
-import 'package:cinch/Complete.dart';
+import 'package:cinch/Component/CustomerCard.dart';
+import 'package:cinch/Customers.dart';
 import 'package:cinch/Inspection.dart';
 import 'package:cinch/List.dart';
+import 'package:cinch/Models/CustomerModel.dart';
 import 'package:cinch/Profile.dart';
-import 'package:cinch/Customers.dart';
 import 'package:cinch/ScopeofWork.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'Api.dart';
 
@@ -24,11 +21,19 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   bool pageLoaded = false;
   dynamic user;
+  List<dynamic> todaysSchedule = [];
   initData() async {
     var u = await getUser();
-    print(u);
-    setState(() {
+    var responseData = await getTodaysSchedule();
+    var decodedData = jsonDecode(responseData);
+    //print(decodedData);
 
+    List scheduleList = decodedData
+        .map((customerJson) => CustomerModel.fromJson(customerJson))
+        .toList();
+    //print(u);
+    setState(() {
+      todaysSchedule = scheduleList;
       user = u;
       pageLoaded = true;
     });
@@ -66,7 +71,7 @@ class _DashboardState extends State<Dashboard> {
                               ),
                             ),
                             onTap: () {
-                              Navigator.push(
+                             /* Navigator.push(
                                   context,
                                   PageRouteBuilder(
                                       transitionDuration:
@@ -85,7 +90,7 @@ class _DashboardState extends State<Dashboard> {
                                       pageBuilder: (context, animation,
                                           secondryAnimation) {
                                         return Profile();
-                                      }));
+                                      }));*/
                             },
 
                           ),
@@ -242,7 +247,7 @@ class _DashboardState extends State<Dashboard> {
                               child: Container(
                                 height: 100,
                                 width: 100,
-                                *//*color: Colors.blue,*//*
+                                *//*color: Colors.blue,*/ /*
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
@@ -324,91 +329,6 @@ class _DashboardState extends State<Dashboard> {
                             const SizedBox(
                               width: 10,
                             ),
-                            Container(
-                              height: 100,
-                              width: 150,
-                              /*color: Colors.blue,*/
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    color: Colors.grey
-                                        .withOpacity(0.2), // Border color
-                                    width: 2, // Border width
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.white,
-                                      offset: Offset(0, 3),
-                                    ),
-                                  ]),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        "Inspections",
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontFamily: "poppins",
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Container(
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey,
-                                              offset: Offset(0,
-                                                  2), // Adjust the offset as needed
-                                              blurRadius:
-                                                  3, // Adjust the blur radius as needed
-                                            ),
-                                          ],
-                                        ),
-                                        child: CircleAvatar(
-                                        radius:
-                                        20, // Adjust the radius as needed
-                                        backgroundColor: Colors.white, // Set the background color
-                                        child: Image.asset("asstes/image/inspection.png"), // Set the image
-                                      ),
-                                      ),
-                                    ],
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        PageRouteBuilder(
-                                            transitionDuration:
-                                            const Duration(milliseconds: 700),
-                                            transitionsBuilder: (context, animation,
-                                                secondryAnimation, child) {
-                                              final slideAnimation = Tween(
-                                                  begin: const Offset(1, 0),
-                                                  end: const Offset(0, 0))
-                                                  .animate(animation);
-                                              return SlideTransition(
-                                                position: slideAnimation,
-                                                child: child,
-                                              );
-                                            },
-                                            pageBuilder: (context, animation,
-                                                secondryAnimation) {
-                                              return Inspection(sampleDataList: sampleDataList ?? [] );
-                                            }));
-                                  },
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
                             InkWell(
                               child: Container(
                                 height: 100,
@@ -431,7 +351,8 @@ class _DashboardState extends State<Dashboard> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const Text(
                                         "Customers",
@@ -450,19 +371,21 @@ class _DashboardState extends State<Dashboard> {
                                           boxShadow: [
                                             BoxShadow(
                                               color: Colors.grey,
-                                              offset: Offset(0,
-                                                  2), // Adjust the offset as needed
+                                              offset: Offset(0, 2),
+                                              // Adjust the offset as needed
                                               blurRadius:
                                                   3, // Adjust the blur radius as needed
                                             ),
                                           ],
                                         ),
-                                        child:  CircleAvatar(
-                                        radius:
-                                        20, // Adjust the radius as needed
-                                        backgroundColor: Colors.white, // Set the background color
-                                        child: Image.asset("asstes/image/propects.png"), // Set the image
-                                      ),
+                                        child: CircleAvatar(
+                                          radius: 20,
+                                          // Adjust the radius as needed
+                                          backgroundColor: Colors.white,
+                                          // Set the background color
+                                          child: Image.asset(
+                                              "asstes/image/propects.png"), // Set the image
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -495,8 +418,7 @@ class _DashboardState extends State<Dashboard> {
                               width: 10,
                             ),
                             InkWell(
-                              child:
-                              Container(
+                              child: Container(
                                 height: 100,
                                 width: 150,
                                 /*color: Colors.blue,*/
@@ -536,6 +458,94 @@ class _DashboardState extends State<Dashboard> {
                                           boxShadow: [
                                             BoxShadow(
                                               color: Colors.grey,
+                                              offset: Offset(0, 2),
+                                              // Adjust the offset as needed
+                                              blurRadius:
+                                                  3, // Adjust the blur radius as needed
+                                            ),
+                                          ],
+                                        ),
+                                        child: CircleAvatar(
+                                          radius: 20,
+                                          // Adjust the radius as needed
+                                          backgroundColor: Colors.white,
+                                          // Set the background color
+                                          child: Image.asset(
+                                              "asstes/image/scpe.png"), // Set the image
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                        transitionDuration:
+                                            const Duration(milliseconds: 700),
+                                        transitionsBuilder: (context, animation,
+                                            secondryAnimation, child) {
+                                          final slideAnimation = Tween(
+                                                  begin: const Offset(1, 0),
+                                                  end: const Offset(0, 0))
+                                              .animate(animation);
+                                          return SlideTransition(
+                                            position: slideAnimation,
+                                            child: child,
+                                          );
+                                        },
+                                        pageBuilder: (context, animation,
+                                            secondryAnimation) {
+                                          return const Scope();
+                                        }));
+                              },
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              height: 100,
+                              width: 150,
+                              /*color: Colors.blue,*/
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(
+                                    color: Colors.grey
+                                        .withOpacity(0.2), // Border color
+                                    width: 2, // Border width
+                                  ),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.white,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ]),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Inspections",
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontFamily: "poppins",
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey,
                                               offset: Offset(0,
                                                   2), // Adjust the offset as needed
                                               blurRadius:
@@ -544,41 +554,45 @@ class _DashboardState extends State<Dashboard> {
                                           ],
                                         ),
                                         child: CircleAvatar(
-                                          radius:
-                                          20, // Adjust the radius as needed
-                                          backgroundColor: Colors.white, // Set the background color
-                                          child: Image.asset("asstes/image/scpe.png"), // Set the image
+                                          radius: 20,
+                                          // Adjust the radius as needed
+                                          backgroundColor: Colors.white,
+                                          // Set the background color
+                                          child: Image.asset(
+                                              "asstes/image/inspection.png"), // Set the image
                                         ),
                                       ),
                                     ],
                                   ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        PageRouteBuilder(
+                                            transitionDuration: const Duration(
+                                                milliseconds: 700),
+                                            transitionsBuilder: (context,
+                                                animation,
+                                                secondryAnimation,
+                                                child) {
+                                              final slideAnimation = Tween(
+                                                      begin: const Offset(1, 0),
+                                                      end: const Offset(0, 0))
+                                                  .animate(animation);
+                                              return SlideTransition(
+                                                position: slideAnimation,
+                                                child: child,
+                                              );
+                                            },
+                                            pageBuilder: (context, animation,
+                                                secondryAnimation) {
+                                              return Inspection(
+                                                  sampleDataList:
+                                                      sampleDataList ?? []);
+                                            }));
+                                  },
                                 ),
                               ),
-                              onTap: (){
-                                Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                          transitionDuration:
-                                          const Duration(milliseconds: 700),
-                                          transitionsBuilder: (context, animation,
-                                              secondryAnimation, child) {
-                                            final slideAnimation = Tween(
-                                                begin: const Offset(1, 0),
-                                                end: const Offset(0, 0))
-                                                .animate(animation);
-                                            return SlideTransition(
-                                              position: slideAnimation,
-                                              child: child,
-                                            );
-                                          },
-                                          pageBuilder: (context, animation,
-                                              secondryAnimation) {
-                                            return const Scope();
-                                          }));
-                                },
-
-
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -586,7 +600,7 @@ class _DashboardState extends State<Dashboard> {
                 const Padding(
                   padding: EdgeInsets.only(left: 12, top: 20),
                   child: Text(
-                    "Today tasks",
+                    "Today schedule",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -594,8 +608,22 @@ class _DashboardState extends State<Dashboard> {
                         fontWeight: FontWeight.w500),
                   ),
                 ),
-    DefaultTabController(
-    length: 4,
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child:
+                  Container(
+                    height: 200,
+                    child:
+                      ListView(
+                        children: todaysSchedule.map((value) {
+                          return CustomerCard(customer: value);
+                        }).toList(),
+                      ),
+                  ),
+
+                )
+                /*DefaultTabController(
+    length: 3,
     child: Container(
     width: MediaQuery.of(context).size.width,
     height: 400,
@@ -626,7 +654,6 @@ indicatorPadding: EdgeInsets.all(5),
     unselectedLabelColor: Colors.black,
     tabs: const [
     Tab(text: "All tasks",),
-    /*Tab(text: "Today task"),*/
     Tab(text: "In progress"),
     Tab(text: "Completed"),
     ],
@@ -1092,357 +1119,7 @@ indicatorPadding: EdgeInsets.all(5),
         ),
 
       ),
-      SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child:
-        Column(
-          children: [
-            Padding(
-              padding:  EdgeInsets.only(left: 10,right :10,),
-              child: Container(
-                width: MediaQuery.of(context).size.width - 20,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey.withOpacity(0.2),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 13, left: 10, right: 2),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Homepage Redesign",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Poppins"
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Text(
-                        "Redesign the homepage of our website to improve user engagement and align with our updated bran ",
-                        style: TextStyle(color: Colors.grey, fontSize: 14,fontFamily: "poppins",fontWeight: FontWeight.w400),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.folder_copy_outlined,
-                                    size: 20,
-                                    color: Colors.grey,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "Website Revamp",
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 13,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: "poppins"
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 10),
-                                    child: Icon(
-                                      Icons.alarm,
-                                      size: 20,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 10),
-                                    child: Text(
-                                      "October 15,2023",
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: "poppins",
-                                          fontSize: 13),
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 5,bottom: 10),
-                            child: Container(
-                              height: 35,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(18),
-                                  color: Colors.purple.withOpacity(0.2)),
-                              child: const Center(
-                                  child: Text(
-                                    "Today Task",
-                                    style: TextStyle(
-                                        color: Colors.purple,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Padding(
-              padding:  EdgeInsets.only(left: 10,right: 10),
-              child: Container(
-                width: MediaQuery.of(context).size.width - 20,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey.withOpacity(0.2),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 13, left: 10, right: 2),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Mobile App Interface Optimization",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500,fontFamily: "poppins,"),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Text(
-                        "Optimize the user interface for our mobile app ensuring a seamless and delightful user experiene",
-                        style: TextStyle(color: Colors.grey, fontSize: 14,fontFamily: "poppins",fontWeight: FontWeight.w400),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.folder_copy_outlined,
-                                    size: 20,
-                                    color: Colors.grey,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "App Enhancements",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: "poppins",
-                                        fontSize: 13),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.alarm,
-                                      size: 20,
-                                      color: Colors.grey,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "October 15,2023",
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: "poppins",
-                                          fontSize: 13),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 5,bottom: 10),
-                            child: Container(
-                              height: 35,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(18),
-                                  color: Colors.blue.withOpacity(0.2)),
-                              child: const Center(
-                                  child: Text(
-                                    "In progress",
-                                    style: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10,right : 10 ),
-              child: Container(
-                width: MediaQuery.of(context).size.width - 20,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey.withOpacity(0.2),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 13, left: 10, right: 2),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "E-commerce Checkout Process Redesign",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500,fontFamily: "poppins"),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Text(
-                        "Redesign the checkout process for our e-commerce platform, focusing on improving conve...",
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.folder_copy_outlined,
-                                      size: 20,
-                                      color: Colors.grey,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "Checkout Optimization",
-                                      style: TextStyle(
-                                          color: Colors.grey, fontSize: 13,fontFamily: "poppins",fontWeight: FontWeight.w400),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.alarm,
-                                      size: 20,
-                                      color: Colors.grey,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "October 15,2023",
-                                      style: TextStyle(
-                                          color: Colors.grey, fontSize: 13,fontFamily: "poppins",fontWeight: FontWeight.w400),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 5),
-                              child: Container(
-                                height: 35,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(18),
-                                    color: Colors.green.withOpacity(0.2)),
-                                child: const Center(
-                                    child: Text(
-                                      "Completed",
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            
-          ],
-        ),
-
-      ),
+     
       SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child:
@@ -1822,9 +1499,8 @@ indicatorPadding: EdgeInsets.all(5),
     ],
     ),
     ),
-    )
-
-                        ],
+    )*/
+              ],
           )  )));
 
   }

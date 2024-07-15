@@ -50,3 +50,30 @@ getUser() async{
   return null;
 }
 
+getCustomers() async {
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString('token');
+  final result =await APIService().getRequest(route: '/customers',token: token);
+  if(result.statusCode == 200){
+    return result.body;
+  }
+}
+
+getScopes() async {
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString('token');
+  final result =await APIService().getRequest(route: '/sow',token: token);
+  if(result.statusCode == 200){
+    return result.body;
+  }
+}
+
+getTodaysSchedule() async {
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString('token');
+  final result =await APIService().getRequest(route: '/scheduling/today',token: token);
+  if(result.statusCode == 200){
+    return result.body;
+  }
+}
+

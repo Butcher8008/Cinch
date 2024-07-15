@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:cinch/Component/Head.dart';
 import 'package:cinch/Dashboard.dart';
+import 'package:cinch/Models/CustomerModel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'Api.dart';
 
 class Customers extends StatefulWidget {
   const Customers({super.key});
@@ -11,56 +16,34 @@ class Customers extends StatefulWidget {
 }
 
 class _CustomersState extends State<Customers> {
-  var ProspectList = [
-    {
-      'companyName': 'Company B',
-      'contactName': 'Jane Smith',
-      'email': 'info@test.com',
-      'date': 'November 20, 2023'
-    },
-    {
-      'companyName': 'Company B',
-      'contactName': 'Jane Smith',
-      'email': 'info@test.com',
-      'date': 'November 20, 2023'
-    },
-    {
-      'companyName': 'Company B',
-      'contactName': 'Jane Smith',
-      'email': 'info@test.com',
-      'date': 'November 20, 2023'
-    },
-    {
-      'companyName': 'Company B',
-      'contactName': 'Jane Smith',
-      'email': 'info@test.com',
-      'date': 'November 20, 2023'
-    },
-    {
-      'companyName': 'Company B',
-      'contactName': 'Jane Smith',
-      'email': 'info@test.com',
-      'date': 'November 20, 2023'
-    },
-    {
-      'companyName': 'Company B',
-      'contactName': 'Jane Smith',
-      'email': 'info@test.com',
-      'date': 'November 20, 2023'
-    },
-    {
-      'companyName': 'Company B',
-      'contactName': 'Jane Smith',
-      'email': 'info@test.com',
-      'date': 'November 20, 2023'
-    },
-    {
-      'companyName': 'Company B',
-      'contactName': 'Jane Smith',
-      'email': 'info@test.com',
-      'date': 'November 20, 2023'
-    },
-  ];
+  bool pageLoaded = false;
+  List<dynamic> customers = [];
+
+  apiCall() async {
+    try {
+      var responseData = await getCustomers();
+      var decodedData = jsonDecode(responseData);
+      //print(decodedData);
+
+      List customersApi = decodedData.values
+          .map((customerJson) => CustomerModel.fromJson(customerJson))
+          .toList();
+
+      setState(() {
+        customers = customersApi;
+        pageLoaded = true;
+      });
+
+    } catch (e) {
+      //print('Error: $e');
+    }
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    apiCall();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +92,7 @@ class _CustomersState extends State<Customers> {
             Container(
               height: MediaQuery.of(context).size.height - 120,
               child: ListView(
-                  children: ProspectList.map((value) {
+                  children: customers.map((value) {
                 return Padding(
                   padding:
                       const EdgeInsets.only(left: 10, right: 10, bottom: 10),
@@ -141,7 +124,7 @@ class _CustomersState extends State<Customers> {
                               Padding(
                                 padding: EdgeInsets.only(right: 8),
                                 child: Text(
-                                  value['companyName'].toString(),
+                                  value.company,
                                   style: TextStyle(
                                     fontSize: 20,
                                   ),
@@ -165,7 +148,7 @@ class _CustomersState extends State<Customers> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 17),
                                 child: Text(
-                                  value['contactName'].toString(),
+                                  value.name,
                                   style: TextStyle(
                                     fontSize: 18,
                                   ),
@@ -198,7 +181,7 @@ class _CustomersState extends State<Customers> {
                                           width: 10,
                                         ),
                                         Text(
-                                          value['email'].toString(),
+                                          value.email,
                                           style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 12,
@@ -220,7 +203,7 @@ class _CustomersState extends State<Customers> {
                                           width: 10,
                                         ),
                                         Text(
-                                          value['date'].toString(),
+                                          value.createdAt.toString(),
                                           style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 12,
@@ -237,7 +220,8 @@ class _CustomersState extends State<Customers> {
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return CustomDialog();
+                                          //print(value.email);
+                                          return CustomDialog(customer: value);
                                         },
                                       );
                                     },
@@ -274,6 +258,9 @@ class _CustomersState extends State<Customers> {
 }
 
 class CustomDialog extends StatelessWidget {
+  final CustomerModel customer;
+  const CustomDialog({required this.customer});
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -291,263 +278,132 @@ class CustomDialog extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CircleAvatar(
-                      radius: 45,
-                      backgroundColor: Colors.blue.withOpacity(0.2),
-                      child: const Icon(
-                        Icons.person,
-                        size: 70,
-                        color: Colors.blue,
-                      ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Full Name:",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Container(
-                          width: 200,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              color: Colors.blue,
-                              // Set your desired outline color
-                              width: 2.0,
-                              // Set the width of the outline
-                            ),
-                          ),
-                          child: const Text(
-                            " sfsdaffas",
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 14,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Email:",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Container(
-                          width: 140,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              color: Colors.blue,
-                              // Set your desired outline color
-                              width: 2.0,
-                              // Set the width of the outline
-                            ),
-                          ),
-                          child: const Text(
-                            " sfsdaffas",
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Phone:",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Container(
-                          width: 140,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              color: Colors.blue,
-                              // Set your desired outline color
-                              width: 2.0,
-                              // Set the width of the outline
-                            ),
-                          ),
-                          child: const Text(
-                            " sfsdaffas",
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 14,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Company Name:",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Container(
-                          width: 140,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              color: Colors.blue,
-                              // Set your desired outline color
-                              width: 2.0,
-                              // Set the width of the outline
-                            ),
-                          ),
-                          child: const Text(
-                            " sfsdaffas",
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Days of the week:",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Container(
-                          width: 140,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              color: Colors.blue,
-                              // Set your desired outline color
-                              width: 2.0,
-                              // Set the width of the outline
-                            ),
-                          ),
-                          child: const Text(
-                            " sfsdaffas",
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 14,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 17),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Text(
-                        "Enter budgeted cleaning time",
-                        style: TextStyle(fontSize: 16),
+                      CircleAvatar(
+                        radius: 45,
+                        backgroundColor: Colors.blue.withOpacity(0.2),
+                        backgroundImage: customer.avatar != null
+                            ? NetworkImage(customer.avatar ?? '') as ImageProvider
+                            : const AssetImage('asstes/image/blank.png'),
                       ),
-                      Container(
-                        width: 300,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                            color: Colors.blue,
-                            // Set your desired outline color
-                            width: 2.0,
-                            // Set the width of the outline
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Company:",
+                            style: TextStyle(fontSize: 18),
                           ),
-                        ),
-                        child: const Text(
-                          " sfsdaffas",
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
-                        ),
+                          Container(
+                            width: 200,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: Colors.grey,
+                                width: 2.0,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                customer.company,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 14,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 17),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(height: 14),
+                  buildInfoRow("Email:", customer.email),
+                  buildInfoRow("Contact Name:", customer.name),
+                  buildInfoRow("Phone Number:", customer.phone),
+                  buildInfoRow("Address:", customer.address),
+                  buildInfoRow("City:", customer.city),
+                  buildInfoRow("State:", customer.state),
+                  buildInfoRow("Postal Code:", customer.zip),
+                  buildInfoRow("Days of the week:", customer.days.join(', ')),
+                  buildInfoRow("Budgeted Cleaning Time:", customer.cleaningTime!=null ? '${customer.cleaningTime} hours': ''),
+                  buildInfoRow("Notes:", customer.note??''),
+                  const SizedBox(height: 20),
+                  /*Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Additional notes:",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Container(
-                        width: 300,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                            color: Colors.blue,
-                            // Set your desired outline color
-                            width: 2.0,
-                            // Set the width of the outline
+                      SizedBox(
+                        width: 250,
+                        height: 35,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                           ),
-                        ),
-                        child: const Text(
-                          " sfsdaffas",
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                          onPressed: () {
+                            // Implement the copy functionality here
+                          },
+                          child: const Text(
+                            "Copy Customer Number",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         ),
                       ),
                     ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.blue),
-                    ),
-                    child: const Text(
-                      'Close',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
+                  ),*/
+                ],
+              ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 18),
+          ),
+          Container(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                color: Colors.grey,
+                width: 2.0,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Text(
+                value,
+                style: const TextStyle(fontSize: 18, color: Colors.black),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

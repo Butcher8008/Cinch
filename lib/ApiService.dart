@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 class APIService{
  /* static const baseURL = 'http://127.0.0.1:8000';
   static const webURL = 'http://127.0.0.1:8000';*/
-  final apiUrl='https://cinch.eatonblueprintinvestments.com/api';
+  final apiUrl='http://app.cleancinch.com/api';
 
 
   final _header = {

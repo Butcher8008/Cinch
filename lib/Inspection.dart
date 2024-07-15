@@ -54,7 +54,7 @@ class Inspection extends StatelessWidget {
                 },
               ),
             ),
-            Flexible(
+            /*Flexible(
               child: Container(
                 height: MediaQuery.of(context).size.height-50,
                 child: ListView(
@@ -146,7 +146,7 @@ class Inspection extends StatelessWidget {
 
                 ),
               ),
-            ),
+            ),*/
 
           ],
         ),

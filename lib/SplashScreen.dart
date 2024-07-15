@@ -39,7 +39,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
-    checkToken();
+
+    //checkToken();
 
     _controller = AnimationController(
       vsync: this,

@@ -245,10 +245,10 @@ class _LoginState extends State<Login> {
                     SizedBox(
                       width: 70,
                     ),
-                    Text(
+                   /* Text(
                       "Forget Password?",
                       style: TextStyle(color: Colors.blue, fontSize: 14),
-                    )
+                    )*/
                   ],
                 ),
               ),
