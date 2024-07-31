@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                  'asstes/image/SplashscreenBackgroundImageCopy.png',
+                  'asstes/image/homeScreenBackground.png',
                 ),
                 fit: BoxFit.cover,
               ),

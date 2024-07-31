@@ -68,6 +68,15 @@ getScopes() async {
   }
 }
 
+getWorkOrders() async {
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString('token');
+  final result =await APIService().getRequest(route: '/work-orders',token: token);
+  if(result.statusCode == 200){
+    return result.body;
+  }
+}
+
 getTodaysSchedule() async {
   final prefs = await SharedPreferences.getInstance();
   final token = prefs.getString('token');
@@ -75,5 +84,45 @@ getTodaysSchedule() async {
   if(result.statusCode == 200){
     return result.body;
   }
+}
+
+logout() async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.clear();
+  return true;
+}
+
+postComplete(id, type) async {
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString('token');
+  var url = '/work-orders/';
+  if(type=='scope') {
+    url = '/sow/';
+  }
+
+  url = url+'complete/'+id;
+
+  final result = await APIService().postRequest(route: url, data: {},token: token);
+
+  if (result.statusCode == 200) {
+    final data = jsonDecode(result.body);
+    Toasts.sucess(data['message']);
+    return true;
+
+  } else {
+    if(result.statusCode == 422 || result.statusCode == 404) {
+      final data = jsonDecode(result.body);
+      //print(data['message']);
+      Toasts.error(data['message']);
+      return false;
+    }
+    else {
+      final data = jsonDecode(result.body);
+      print(data);
+      Toasts.error('Something went wrong!');
+      return false;
+    }
+  }
+
 }
 

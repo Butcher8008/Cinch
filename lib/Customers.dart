@@ -91,7 +91,7 @@ class _CustomersState extends State<Customers> {
             ),
             Container(
               height: MediaQuery.of(context).size.height - 120,
-              child: ListView(
+              child: pageLoaded ? ListView(
                   children: customers.map((value) {
                 return Padding(
                   padding:
@@ -99,6 +99,7 @@ class _CustomersState extends State<Customers> {
                   child: Container(
                     width: MediaQuery.of(context).size.width - 20,
                     decoration: BoxDecoration(
+                      color: Colors.white,
                         border: Border.all(
                           color: Colors.grey.withOpacity(0.2),
                           width: 2.0,
@@ -122,7 +123,7 @@ class _CustomersState extends State<Customers> {
                                     fontFamily: "poppins"),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(right: 8),
+                                padding: EdgeInsets.only(right: 20),
                                 child: Text(
                                   value.company,
                                   style: TextStyle(
@@ -146,7 +147,7 @@ class _CustomersState extends State<Customers> {
                                     fontFamily: "poppins"),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(right: 17),
+                                padding: const EdgeInsets.only(right: 20),
                                 child: Text(
                                   value.name,
                                   style: TextStyle(
@@ -250,7 +251,10 @@ class _CustomersState extends State<Customers> {
                     ),
                   ),
                 );
-              }).toList()),
+              }).toList()) :  Container(
+                width:MediaQuery.of(context).size.width,
+                child: Center(child: CircularProgressIndicator())
+              ),
             ),
           ]),
     ));
@@ -328,8 +332,8 @@ class CustomDialog extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 14),
-                  buildInfoRow("Email:", customer.email),
                   buildInfoRow("Contact Name:", customer.name),
+                  buildInfoRow("Email:", customer.email),
                   buildInfoRow("Phone Number:", customer.phone),
                   buildInfoRow("Address:", customer.address),
                   buildInfoRow("City:", customer.city),

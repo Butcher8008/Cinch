@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:cinch/Component/Head.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'Component/PdfViewer.dart';
 import 'Models/ScopeModel.dart';
 
 class Scope extends StatefulWidget {
@@ -16,80 +17,6 @@ class Scope extends StatefulWidget {
 }
 
 class _ScopeState extends State<Scope> {
-  var ScopeList = [
-  {
-  'ID': '10321',
-  'Customer': 'sffa',
-  'Scope Name': 'Webrexo',
-  'Created At': 'November 20, 2023',
-  'Scope Type': 'Office',
-    'Frequency': 'One-Time',
-
-  },
-{
-'ID': '10321',
-'Customer': 'sffa',
-'Scope Name': 'Webrexo',
-'Created At': 'November 20, 2023',
-'Scope Type': 'Office',
-  'Frequency': 'One-Time',
-
-},
-{
-'ID': '10321',
-'Customer': 'sffa',
-'Scope Name': 'Webrexo',
-'Created At': 'November 20, 2023',
-'Scope Type': 'Office',
-  'Frequency': 'One-Time',
-
-},
-{
-'ID': '10321',
-'Customer': 'sffa',
-'Scope Name': 'Webrexo',
-'Created At': 'November 20, 2023',
-'Scope Type': 'Office',
-  'Frequency': 'One-Time',
-
-},
-{
-'ID': '10321',
-'Customer': 'sffa',
-'Scope Name': 'Webrexo',
-'Created At': 'November 20, 2023',
-'Scope Type': 'Office',
-  'Frequency': 'One-Time',
-
-},
-{
-'ID': '10321',
-'Customer': 'sffa',
-'Scope Name': 'Webrexo',
-'Created At': 'November 20, 2023',
-'Scope Type': 'Office',
-  'Frequency': 'One-Time',
-
-},
-{
-'ID': '10321',
-'Customer': 'sffa',
-'Scope Name': 'Webrexo',
-'Created At': 'November 20, 2023',
-'Scope Type': 'Office',
-  'Frequency': 'One-Time',
-
-},
-{
-'ID': '10321',
-'Customer': 'sffa',
-'Scope Name': 'Webrexo',
-'Created At': 'November 20, 2023',
-'Scope Type': 'Office',
-'Frequency': 'One-Time',
-
-},
-];
 
   bool pageLoaded = false;
   List<dynamic> scopes = [];
@@ -101,10 +28,26 @@ class _ScopeState extends State<Scope> {
     return formattedDate;
   }
 
+  void showPdf(String url, type, id) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0), // Adjust the radius as needed
+          ),
+          child: PdfViewer(url: url, title: 'Work Scope',type: type, modelId: id.toString(),onComplete: apiCall,),
+        );
+      },
+    );
+  }
+
+
+
   apiCall() async {
     try {
+      pageLoaded = false;
       var responseData = await getScopes();
-      print(responseData);
       var decodedData = jsonDecode(responseData);
 
 
@@ -174,7 +117,7 @@ class _ScopeState extends State<Scope> {
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height-120,
-                  child: ListView(
+                  child: pageLoaded ? (scopes.isNotEmpty ? ListView(
                       children: scopes.map((value) {
                         return
                           Padding(
@@ -182,6 +125,7 @@ class _ScopeState extends State<Scope> {
                             child: Container(
                               width: MediaQuery.of(context).size.width-20,
                               decoration: BoxDecoration(
+                                color: Colors.white,
                                   border: Border.all(
                                     color: Colors.grey.withOpacity(0.2),
                                     width: 2.0,
@@ -200,7 +144,7 @@ class _ScopeState extends State<Scope> {
                                       children: [
                                         Text('ID ',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
                                         Padding(
-                                          padding: EdgeInsets.only(right: 45),
+                                          padding: EdgeInsets.only(right: 20),
                                           child: Text(value.id.toString(),style: TextStyle(fontSize: 20,),),
                                         ),
                                       ],
@@ -211,7 +155,7 @@ class _ScopeState extends State<Scope> {
                                       children: [
                                         Text("Customer",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
                                         Padding(
-                                          padding: const EdgeInsets.only(right: 65),
+                                          padding: const EdgeInsets.only(right: 20),
                                           child: Text(value.proposalCustomer,style: TextStyle(fontSize: 20),),
                                         ),
                                       ],
@@ -238,8 +182,8 @@ class _ScopeState extends State<Scope> {
                                             Row(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text("Scope Type :",style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.bold),),
-                                                SizedBox(width: 10,),
+                                                Text("Scope Type: ",style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.bold),),
+
                                                 Text(value.type,style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.bold),)
                                               ],
                                             ),
@@ -247,16 +191,15 @@ class _ScopeState extends State<Scope> {
                                             Row(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text("Frequency :",style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.bold),),
-                                                SizedBox(width: 10,),
+                                                Text("Frequency: ",style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.bold),),
+
                                                 Text(value.frequency,style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.bold),)
                                               ],
                                             ),
                                             Row(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text("Created At :",style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.bold),),
-                                                SizedBox(width: 10,),
+                                                Text("Created At: ",style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.bold),),
                                                 Padding(
                                                   padding: const EdgeInsets.only(bottom: 10),
                                                   child: Text(formatDateTime(value.createdAt),style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.bold),),
@@ -267,21 +210,28 @@ class _ScopeState extends State<Scope> {
                                           ],
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(right: 10,bottom: 33,left: 0),
-                                          child: Container(
-                                              height: 35,
-                                              width: 96,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(18),
-                                                color: Colors.blue.withOpacity(0.1),
-                                              ),
-                                              child:  Center(
-                                                child:(
-                                                Image.asset("asstes/image/glass.png")
-                                                )
-                                              ),
-                                            ),
-
+                                          padding: const EdgeInsets.only(right: 10,bottom: 10,left: 0),
+                                          child: InkWell(
+                                            child: Container(
+                                                height: 35,
+                                                width: 96,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(18),
+                                                  color: Colors.blue.withOpacity(0.1),
+                                                ),
+                                                child:  Center(
+                                                  child:(
+                                                  Image.asset("asstes/image/glass.png")
+                                                  )
+                                                ),
+                                             ),
+                                            onTap: () {
+                                              if (value.pdfUrl2 != null) {
+                                                //print(value.pdfUrl2);
+                                                showPdf(value.pdfUrl2!, 'scope', value.id);
+                                              }
+                                            },
+                                          ),
                                         )
                                       ],
                                     ),
@@ -292,8 +242,14 @@ class _ScopeState extends State<Scope> {
                           );
 
 
-                      }).toList()
-
+                      }).toList()) :
+                    Container(
+                        width:MediaQuery.of(context).size.width,
+                        child: Center(child: Text('No pending work found!'))
+                    )
+                  ) :  Container(
+                    width:MediaQuery.of(context).size.width,
+                    child: Center(child: CircularProgressIndicator())
                   ),
                 ),
 

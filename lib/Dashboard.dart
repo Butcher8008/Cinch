@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:cinch/ApiService.dart';
 import 'package:cinch/Component/CustomerCard.dart';
 import 'package:cinch/Customers.dart';
-import 'package:cinch/Inspection.dart';
+import 'package:cinch/HomeScreen.dart';
+import 'package:cinch/WorkOrders.dart';
 import 'package:cinch/List.dart';
 import 'package:cinch/Models/CustomerModel.dart';
 import 'package:cinch/Profile.dart';
@@ -43,6 +45,49 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     initData();
+  }
+
+  void showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0), // Rounded corners
+          ),
+          title: Text('Confirm Logout'),
+          content: Text('Are you sure you want to log out?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                logout(); // Call logout function
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 700),
+                        transitionsBuilder: (context,animation, secondryAnimation,child){
+                          final slideAnimation= Tween(begin: Offset(0,1),end : Offset(0,0))
+                              .animate(animation);
+                          return SlideTransition(position: slideAnimation,
+                            child: child,
+                          );
+                        },
+                        pageBuilder : (context,animation,secondryAnimation){
+                          return  HomeScreen();
+                        }));
+              },
+              child: Text('Logout', style: TextStyle(color: Colors.blue)),
+            ),
+          ],
+        );
+      },
+    );
   }
 
     @override
@@ -112,11 +157,19 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 0.0),
-                        child: Image.asset(
-                            'asstes/image/test.png'
-
+                      InkWell(
+                        onTap: () {
+                          showLogoutDialog(context); // Show the logout dialog
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 0.0),
+                          child: Image(
+                            height: 30,
+                            width: 30,
+                            image:  AssetImage(
+                                'asstes/image/signOut.png'
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -530,7 +583,7 @@ class _DashboardState extends State<Dashboard> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       const Text(
-                                        "Inspections",
+                                        "Work Orders",
                                         style: TextStyle(
                                             color: Colors.grey,
                                             fontFamily: "poppins",
@@ -585,9 +638,7 @@ class _DashboardState extends State<Dashboard> {
                                             },
                                             pageBuilder: (context, animation,
                                                 secondryAnimation) {
-                                              return Inspection(
-                                                  sampleDataList:
-                                                      sampleDataList ?? []);
+                                              return WorkOrders();
                                             }));
                                   },
                                 ),
@@ -614,11 +665,16 @@ class _DashboardState extends State<Dashboard> {
                   Container(
                     height: 200,
                     child:
+                        pageLoaded ?
                       ListView(
                         children: todaysSchedule.map((value) {
                           return CustomerCard(customer: value);
                         }).toList(),
-                      ),
+                      )  :
+                        Container(
+                          width:MediaQuery.of(context).size.width,
+                          child: Center(child: CircularProgressIndicator()),
+                        )
                   ),
 
                 )

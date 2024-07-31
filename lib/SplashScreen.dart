@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       }
     });
 
-    //return token;
+    return token;
   }
 
 
@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   void initState() {
     super.initState();
 
-    //checkToken();
+    checkToken();
 
     _controller = AnimationController(
       vsync: this,
